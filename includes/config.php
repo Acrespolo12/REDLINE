@@ -5,12 +5,12 @@
 //  usa valores por defecto en local
 // ═══════════════════════════════════════════
 
-define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
-define('DB_USER', getenv('DB_USER') ?: 'root');
-define('DB_PASS', getenv('DB_PASS') ?: '');
-define('DB_NAME', getenv('DB_NAME') ?: 'redlinecrew');
+define('DB_HOST', getenv('DB_HOST') ?: 'xpe7ru.h.filess.io');
+define('DB_USER', getenv('DB_USER') ?: 'redline_fairlybeif');
+define('DB_PASS', getenv('DB_PASS') ?: '46fb72d94c8da386f29fbcf2c425e058747c4ae5');
+define('DB_NAME', getenv('DB_NAME') ?: 'redline_fairlybeif');
 
-define('SITE_URL', rtrim(getenv('SITE_URL') ?: 'http://localhost/redlinecrew', '/'));
+define('SITE_URL', rtrim(getenv('SITE_URL') ?: 'https://redlinecrewbarcelona.onrender.com', '/'));
 define('SITE_NAME', getenv('SITE_NAME') ?: 'REDLINECREW');
 define('SITE_VERSION', '1.0.0');
 
