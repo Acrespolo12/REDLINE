@@ -1,15 +1,11 @@
-FROM php:8.2-apache
+FROM php:8.2.0-apache
 
-# Instalar extensiones PHP necesarias
 RUN docker-php-ext-install pdo pdo_mysql mysqli
-
-# Habilitar mod_rewrite de Apache
 RUN a2enmod rewrite
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-# Copiar todos los archivos del proyecto
 COPY . /var/www/html/
 
-# Dar permisos a carpetas de uploads y logs
 RUN mkdir -p /var/www/html/uploads/products \
              /var/www/html/uploads/avatars \
              /var/www/html/logs \
@@ -18,18 +14,16 @@ RUN mkdir -p /var/www/html/uploads/products \
     && chmod -R 755 /var/www/html/uploads \
     && chmod -R 755 /var/www/html/logs
 
-# Configurar Apache para permitir .htaccess
 RUN echo '<Directory /var/www/html>\n\
     Options Indexes FollowSymLinks\n\
     AllowOverride All\n\
     Require all granted\n\
-</Directory>' > /etc/apache2/conf-available/redlinecrew.conf \
-    && a2enconf redlinecrew
+</Directory>' > /etc/apache2/conf-available/app.conf \
+    && a2enconf app
 
-# Render usa la variable PORT — Apache escucha en ese puerto
-RUN sed -i 's/Listen 80/Listen ${PORT:-80}/' /etc/apache2/ports.conf \
-    && sed -i 's/:80>/:${PORT:-80}>/' /etc/apache2/sites-enabled/000-default.conf
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
 
 EXPOSE 80
 
-CMD ["apache2-foreground"]
+CMD ["/start.sh"]
